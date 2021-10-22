@@ -63,10 +63,10 @@ export class ExperimentsTableComponent implements OnInit, OnDestroy {
     },
   ];
   displayedColumns: string[] = ['id', 'name', 'tags', 'openDate', 'action', 'status'];
-  dataSource!: MatTableDataSource<any>;
+  dataSource;
   selection = new SelectionModel<ExperimentInterface>(true, []);
 
-  experimentsSubscription!: any;
+  experimentsSubscription;
 
   constructor(private readonly store: Store<IAppState>) {}
 
