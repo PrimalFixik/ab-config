@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {GetExperiments} from "../../../core/store/actions/experiments.actions";
+import {Store} from "@ngrx/store";
+import {IAppState} from "../../../core/store/state/app.state";
 
 @Component({
   selector: 'app-experiments-group',
@@ -6,10 +10,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./experiments-group.component.scss']
 })
 export class ExperimentsGroupComponent implements OnInit {
+    searchInput = new FormControl('', []);
 
-  constructor() { }
+    constructor(private readonly store: Store<IAppState>) {}
 
-  ngOnInit(): void {
-  }
+    ngOnInit(): void {
+    }
 
+    search(): void {
+        if (!this.searchInput.value) {
+            return;
+        }
+
+        const tags = this.searchInput.value.split(' ');
+        this.store.dispatch(new GetExperiments('onclick', tags))
+    }
 }

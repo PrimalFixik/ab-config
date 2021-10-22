@@ -23,6 +23,7 @@ import {StoreModule} from "@ngrx/store";
 import {EffectsModule} from '@ngrx/effects';
 import {StoreRouterConnectingModule} from '@ngrx/router-store';
 import {HttpClientModule} from "@angular/common/http";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -45,6 +46,8 @@ import {HttpClientModule} from "@angular/common/http";
     MatTableModule,
     MatCheckboxModule,
     MatSlideToggleModule,
+    FormsModule,
+    ReactiveFormsModule,
     StoreModule.forRoot(appReducers),
     EffectsModule.forRoot([
         ExperimentsEffect,
