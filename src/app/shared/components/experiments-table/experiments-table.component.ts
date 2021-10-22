@@ -71,7 +71,7 @@ export class ExperimentsTableComponent implements OnInit, OnDestroy {
   constructor(private readonly store: Store<IAppState>) {}
 
   ngOnInit(): void {
-      this.experimentsSubscription.subscribe((experiments: Array<ExperimentInterface>) => {
+      this.experimentsSubscription = this.experiments$.subscribe((experiments: Array<ExperimentInterface>) => {
           if (experiments !== undefined && experiments.length !== 0) {
               this.dataSource = new MatTableDataSource<ExperimentInterface>(experiments);
           }
