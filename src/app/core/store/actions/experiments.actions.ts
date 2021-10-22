@@ -9,7 +9,7 @@ export enum ExperimentsActionsEnum {
 
 export class GetExperiments implements Action {
   public readonly type = ExperimentsActionsEnum.GetExperiments;
-  constructor(public advertisementType: string, public tags: string) {}
+  constructor(public advertisementType: string, public tags: Array<string>) {}
 }
 
 export class GetExperimentsSuccess implements Action {

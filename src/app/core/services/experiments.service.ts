@@ -10,8 +10,12 @@ import {environment} from "../../../environments/environment";
 export class ExperimentsService {
     constructor(private readonly http: HttpClient) {}
 
-    getExperiments(advertisementType: string, tags: string): Observable<any> {
-        let params = new HttpParams().set('tags', tags);
+    getExperiments(advertisementType: string, tags: Array<string>): Observable<any> {
+        let params = new HttpParams();
+
+        tags.forEach(tag => {
+          params = params.append('tags', tag);
+        })
 
         return this.http.get(environment.apiBaseDomain + '/experiments/' + advertisementType, {
             params,
