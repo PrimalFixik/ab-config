@@ -1,14 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SelectionModel} from "@angular/cdk/collections";
 import {MatTableDataSource} from "@angular/material/table";
 import {ExperimentInterface} from "../../../core/interfaces/experiment.interface";
+import {Observable} from "rxjs";
+import {select, Store} from "@ngrx/store";
+import {IAppState} from "../../../core/store/state/app.state";
+import {experimentsSelector} from "../../../core/store/selectors/experiments.selector";
 
 @Component({
   selector: 'app-experiments-table',
   templateUrl: './experiments-table.component.html',
   styleUrls: ['./experiments-table.component.scss']
 })
-export class ExperimentsTableComponent implements OnInit {
+export class ExperimentsTableComponent implements OnInit, OnDestroy {
+
+  experiments$: Observable<Array<ExperimentInterface>> = this.store.pipe(
+      select(experimentsSelector),
+  );
 
   elementData: Array<ExperimentInterface> = [
     {
@@ -55,24 +63,22 @@ export class ExperimentsTableComponent implements OnInit {
     },
   ];
   displayedColumns: string[] = ['id', 'name', 'tags', 'openDate', 'action', 'status'];
-  dataSource = new MatTableDataSource<ExperimentInterface>(this.elementData);
+  dataSource!: MatTableDataSource<any>;
   selection = new SelectionModel<ExperimentInterface>(true, []);
 
-  constructor() { }
+  experimentsSubscription!: any;
 
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
-  }
-
-  masterToggle() {
-    this.isAllSelected() ?
-      this.selection.clear() :
-      this.dataSource.data.forEach(row => this.selection.select(row));
-  }
+  constructor(private readonly store: Store<IAppState>) {}
 
   ngOnInit(): void {
+      this.experimentsSubscription.subscribe((experiments: Array<ExperimentInterface>) => {
+          if (experiments && experiments.length !== 0) {
+              this.dataSource = new MatTableDataSource<ExperimentInterface>(experiments);
+          }
+      });
   }
 
+  ngOnDestroy(): void {
+      this.experimentsSubscription.unsubscribe();
+  }
 }
