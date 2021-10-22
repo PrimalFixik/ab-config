@@ -72,7 +72,7 @@ export class ExperimentsTableComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
       this.experimentsSubscription.subscribe((experiments: Array<ExperimentInterface>) => {
-          if (experiments && experiments.length !== 0) {
+          if (experiments !== undefined && experiments.length !== 0) {
               this.dataSource = new MatTableDataSource<ExperimentInterface>(experiments);
           }
       });
