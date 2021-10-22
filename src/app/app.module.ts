@@ -16,6 +16,13 @@ import { ExperimentsComponent } from './feature/components/experiments/experimen
 import { TabsComponent } from './shared/components/tabs/tabs.component';
 import {MatTabsModule} from "@angular/material/tabs";
 import { ExperimentsGroupComponent } from './feature/components/experiments-group/experiments-group.component';
+import {MatSlideToggleModule} from "@angular/material/slide-toggle";
+import {ExperimentsEffect} from "./core/store/effects/experiments.effect";
+import {appReducers} from "./core/store/reducers/app.reducer";
+import {StoreModule} from "@ngrx/store";
+import {EffectsModule} from '@ngrx/effects';
+import {StoreRouterConnectingModule} from '@ngrx/router-store';
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -31,11 +38,18 @@ import { ExperimentsGroupComponent } from './feature/components/experiments-grou
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     MatIconModule,
     MatButtonModule,
     MatToolbarModule,
     MatTableModule,
     MatCheckboxModule,
+    MatSlideToggleModule,
+    StoreModule.forRoot(appReducers),
+    EffectsModule.forRoot([
+        ExperimentsEffect,
+    ]),
+    StoreRouterConnectingModule.forRoot({stateKey: 'router'}),
     MatTabsModule,
   ],
   providers: [],

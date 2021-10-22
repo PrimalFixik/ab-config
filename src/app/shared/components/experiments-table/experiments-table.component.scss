@@ -1,4 +1,9 @@
 table {
   width: calc(100vw - 264px);
   box-shadow: none;
+
+  .actions {
+    display: flex;
+    gap: 8px;
+  }
 }

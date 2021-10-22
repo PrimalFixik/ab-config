@@ -3,5 +3,5 @@ export interface ExperimentInterface {
   name: string;
   tags: Array<string>;
   openDate: string;
-  isRunning: boolean;
+  status: boolean;
 }
